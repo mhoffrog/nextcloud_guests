@@ -48,7 +48,7 @@ class AppWhitelist {
 	/** @var int */
 	private $baseUrlLength;
 
-	const WHITELIST_ALWAYS = ',core,theming,settings,avatar,files,heartbeat,dav,guests';
+	const WHITELIST_ALWAYS = ',core,theming,settings,avatar,files,heartbeat,dav,guests,impersonate';
 
 	const DEFAULT_WHITELIST = 'activity,files_pdfviewer,files_sharing,files_texteditor,files_trashbin,files_versions,files_videoplayer,firstrunwizard,gallery,notifications';
 
