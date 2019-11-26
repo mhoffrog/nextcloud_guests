@@ -22,6 +22,7 @@
 namespace OCA\Guests;
 
 use OC\Share\Share;
+use OCP\AppFramework\QueryException;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IConfig;
 use OCP\IDBConnection;
@@ -90,9 +91,17 @@ class GuestManager {
 	}
 
 	public function createGuest(IUser $createdBy, $userId, $email, $displayName = '', $language = '') {
+		$password = $this->secureRandom->generate(20);
+		try {
+			/** @var \OCA\Password_Policy\Generator $generator */
+			$generator = \OC::$server->query(\OCA\Password_Policy\Generator::class);
+			$password = $generator->generate();
+		} catch (QueryException $e) {
+		}
+
 		$this->userBackend->createUser(
 			$userId,
-			$this->secureRandom->generate(20)
+			$password
 		);
 
 		$this->config->setUserValue($userId, 'settings', 'email', $email);
